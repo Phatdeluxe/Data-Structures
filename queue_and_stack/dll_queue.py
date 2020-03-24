@@ -20,13 +20,16 @@ class Queue:
     def enqueue(self, value):
         ''' Adds a value to the end of the queue '''
         self.storage.add_to_tail(value)
-        
+        self.size += 1
 
     def dequeue(self):
         ''' Removes and returns the first value in the queue '''
-        value = self.storage.remove_from_head()
-        return value
+        if self.size > 0:
+            value = self.storage.remove_from_head()
+            self.size -= 1
+            return value
 
     def len(self):
         ''' returns the number of values in the queue '''
-        return self.storage.length
+        return self.size
+        # return self.storage.length
