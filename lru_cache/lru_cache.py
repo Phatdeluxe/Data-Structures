@@ -2,8 +2,11 @@ import sys
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
+'''
+My implementation O(n)
+'''
 
-class LRUCache:
+class LRUCache1:
     """
     Our LRUCache class keeps track of the max number of nodes it
     can hold, the current number of nodes it is holding, a doubly-
@@ -105,3 +108,56 @@ class LRUCache:
 # print(len(test.storage))
 
 # print(test.get(7))
+
+
+
+'''
+Brian's Implemetation O(1)
+'''
+
+class LRUCache:
+
+    def __init__(self, limit=10):
+        self.limit = limit
+        # self.size = 0
+        self.order = DoublyLinkedList()
+        self.storage = {}
+
+    def get(self, key):
+        # Key is not in cache -- return cache
+        if key not in self.storage:
+            return None
+
+        # key in cache
+        else:
+            # move it to tail
+            node = self.storage[key]
+            self.order.move_to_end(node)
+            # return value
+            return node.value[1]
+
+
+    def set(self, key, value):
+        # Different scenarios
+
+        # item/key already exist
+        if key in self.storage:
+            # overwrite value
+            # wher is the value stored?
+            node = self.storage[key]
+            node.value = (key, value)
+            # move to tail (most recently used)
+            self.order.move_to_end(node)
+            return
+
+        # size at limit
+        if len(self.order) == self.limit:
+            # remove oldest entry
+            index_of_oldest = self.order.head.value[0]
+            del self.storage[index_of_oldest]
+            self.order.remove_from_head()
+
+        # add to order
+        self.order.add_to_tail((key, value))
+        # add to storage
+        self.storage[key] = self.order.tail
