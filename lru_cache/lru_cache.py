@@ -6,7 +6,7 @@ from doubly_linked_list import DoublyLinkedList
 My implementation O(n)
 '''
 
-class LRUCache1:
+class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
     can hold, the current number of nodes it is holding, a doubly-
@@ -115,7 +115,7 @@ class LRUCache1:
 Brian's Implemetation O(1)
 '''
 
-class LRUCache:
+class LRUCache1:
 
     def __init__(self, limit=10):
         self.limit = limit
